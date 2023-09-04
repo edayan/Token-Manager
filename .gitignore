@@ -24,11 +24,11 @@ yarn-error.log*
 
 
 /generator/target/
-!/generator/.mvn/wrapper/maven-wrapper.jar
-!/generator/**/src/main/**/target/
-!/generator/**/src/test/**/target/
+#!/generator/.mvn/wrapper/maven-wrapper.jar
+#!/generator/**/src/main/**/target/
+#!/generator/**/src/test/**/target/
 
 /validator/target/
-!/validator/.mvn/wrapper/maven-wrapper.jar
-!/validator/**/src/main/**/target/
-!/validator/**/src/test/**/target/
+#!/validator/.mvn/wrapper/maven-wrapper.jar
+#!/validator/**/src/main/**/target/
+#!/validator/**/src/test/**/target/
