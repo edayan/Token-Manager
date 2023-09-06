@@ -1,11 +1,12 @@
 import React from 'react';
-import {Button} from "flowbite-react";
+import {Button, Card} from "flowbite-react";
+import DialPad from "./ui/DialPad";
 
 function App() {
     return (
-        <div>
-            <Button>Click me</Button>
-        </div>
+        <Card>
+            <DialPad/>
+        </Card>
     );
 }
 
