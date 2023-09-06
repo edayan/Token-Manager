@@ -1,8 +1,33 @@
 import React, { useState } from 'react';
 import { Button, Toast } from 'flowbite-react';
+import axios, { AxiosResponse } from 'axios';
 
 function DialPad() {
     const [chosenDigits, setChosenDigits] = useState([] as number[]);
+    const [generatedToken, setGeneratedToken] = useState('');
+    const [error, setError] = useState('');
+
+    const generateToken = () => {
+        if (chosenDigits.length === 0) {
+            // Handle the case when no digits are chosen
+            return;
+        }
+
+        // Make an API request to the Generator service
+        axios.post('http://localhost:8080/api/token/generate', chosenDigits)
+            .then((response: AxiosResponse) => {
+                // Handle the successful response from the server
+                const generatedToken = response.data;
+                // Update your React component state to show the generated token
+                setGeneratedToken(generatedToken);
+            })
+            .catch(error => {
+                // Handle any errors, such as network issues or server errors
+                console.error('Error generating token:', error);
+                setError(error);
+            });
+    };
+
 
     // Function to handle button click
     const handleButtonClick = (digit: number) => {
@@ -89,11 +114,14 @@ function DialPad() {
                         className={`m-2 bg-red-500 token-generate-button`}
                         style={{ width: 'calc(5 * var(--toast-size))' }}
                         disabled={chosenDigits.length === 0} // Disable when no chosen digits
+                        onClick={generateToken}
                     >
                         Generate Token
                     </Button>
                 </div>
             </div>
+            {error && <p className="error">{error}</p>}
+            {generatedToken && <p className="token">Generated Token: {generatedToken}</p>}
         </div>
     );
 }
