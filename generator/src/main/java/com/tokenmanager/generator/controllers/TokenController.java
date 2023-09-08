@@ -26,12 +26,8 @@ public class TokenController {
     }
 
     private String generateTokenFromDigits(List<Integer> chosenDigits) {
-        // Format the digits into XXXX-XXXX-XXXX-XXXX
         StringBuilder tokenBuilder = new StringBuilder();
         for (int i = 0; i < 16; i++) {
-            if (i > 0 && i % 4 == 0) {
-                tokenBuilder.append("-");
-            }
             int randomIndex = new Random().nextInt(chosenDigits.size());
             int digit = chosenDigits.get(randomIndex);
             tokenBuilder.append(digit);

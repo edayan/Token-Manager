@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
-import { Button, Toast } from 'flowbite-react';
-import axios, { AxiosResponse } from 'axios';
+import React, {useState} from 'react';
+import {Alert, Button, Toast} from 'flowbite-react';
+import axios, {AxiosResponse} from 'axios';
+import {HiInformationCircle} from 'react-icons/hi';
 
-function DialPad() {
+interface DialPadProps {
+    onGeneratedToken: (token: string) => void;
+}
+
+function DialPad({onGeneratedToken}: DialPadProps) {
     const [chosenDigits, setChosenDigits] = useState([] as number[]);
-    const [generatedToken, setGeneratedToken] = useState('');
     const [error, setError] = useState('');
 
     const generateToken = () => {
@@ -19,7 +23,7 @@ function DialPad() {
                 // Handle the successful response from the server
                 const generatedToken = response.data;
                 // Update your React component state to show the generated token
-                setGeneratedToken(generatedToken);
+                onGeneratedToken(generatedToken);
             })
             .catch(error => {
                 // Handle any errors, such as network issues or server errors
@@ -27,7 +31,6 @@ function DialPad() {
                 setError(error);
             });
     };
-
 
     // Function to handle button click
     const handleButtonClick = (digit: number) => {
@@ -77,6 +80,7 @@ function DialPad() {
 
     return (
         <div className="flex flex-row">
+            {/* Left section */}
             <div className="flex flex-col items-center justify-center">
                 <h2>Click to choose digits</h2>
                 {/* Render three rows of digits (0-2, 4-6, 7-9) */}
@@ -89,10 +93,13 @@ function DialPad() {
                     {renderDigitButtons()[0]}
                     <div className="flex-grow"></div>
                 </div>
+
+
             </div>
 
-            {/* Display chosen digits as Toasts on the right */}
+            {/* Right section */}
             <div className="flex flex-col items-center justify-center ml-4">
+
                 <h2>Chosen digits for token</h2>
                 {splitChosenDigitsInTwoRows().map((row, rowIndex) => (
                     <div key={rowIndex} className="flex">
@@ -111,18 +118,32 @@ function DialPad() {
 
                 <div className="flex">
                     <Button
-                        className={`m-2 bg-red-500 token-generate-button`}
-                        style={{ width: 'calc(5 * var(--toast-size))' }}
+                        className={`m-2  bg-blue-500 token-generate-button`}
+                        style={{width: 'calc(5 * var(--toast-size))'}}
                         disabled={chosenDigits.length === 0} // Disable when no chosen digits
                         onClick={generateToken}
                     >
                         Generate Token
                     </Button>
                 </div>
+
+                {error && (
+                    <Alert
+                        color="failure"
+                        icon={HiInformationCircle}
+                    >
+                          <span>
+                            <p>
+                              <span className="font-medium">
+                               {error}
+                              </span>
+                            </p>
+                          </span>
+                    </Alert>
+                )}
             </div>
-            {error && <p className="error">{error}</p>}
-            {generatedToken && <p className="token">Generated Token: {generatedToken}</p>}
         </div>
+
     );
 }
 
