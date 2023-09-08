@@ -42,7 +42,7 @@ function App() {
                 {generatedToken && (
                     <Card>
                         <TokenDisplay token={generatedToken} validationResult={validationResult}/>
-                        <Button className={`m-2 bg-blue-500 token-generate-button`} onClick={validateToken}>
+                        <Button className={`m-2 bg-blue-500 token-generate-button text-center`} onClick={validateToken}>
                             Validate Token
                         </Button>
                     </Card>

@@ -12,13 +12,14 @@ const TokenDisplay: React.FC<TokenDisplayProps> = ({token, validationResult}) =>
     const formattedToken = formatAsCreditCardNumber(token);
 
     return (
-        <div>
+        <div className="text-center">
             <h2 className="text-xl m-auto font-bold mb-4">Generated Token</h2>
             <p className="text-blue-600 m-auto font-bold bg-gray-200 p-2 rounded">{formattedToken}</p>
             {validationResult !== undefined && (
                 <Alert
                     color={validationResult ? 'success' : 'failure'}
                     icon={HiInformationCircle}
+                    className="m-2"
                 >
                     {formattedToken} is {validationResult ? 'valid' : 'not valid'} token
                 </Alert>
